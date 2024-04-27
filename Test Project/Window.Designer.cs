@@ -35,21 +35,24 @@
 			// 
 			this.separator1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.separator1.Color = System.Drawing.Color.Empty;
-			this.separator1.DashPattern = null;
+			this.separator1.Color = System.Drawing.Color.LightGray;
+			this.separator1.DashPattern = new float[] {
+        1F,
+        5F};
 			this.separator1.Direction = JASE.Controls.Separator.Directions.Horizontal;
-			this.separator1.EndColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+			this.separator1.DrawType = JASE.Controls.Separator.DrawTypes.Line;
+			this.separator1.EndColor = System.Drawing.Color.Gray;
 			this.separator1.IsDashed = false;
 			this.separator1.IsEnabled = true;
 			this.separator1.Location = new System.Drawing.Point(13, 13);
 			this.separator1.Name = "separator1";
 			this.separator1.Size = new System.Drawing.Size(225, 1);
 			this.separator1.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-			this.separator1.Style = System.Drawing.Drawing2D.DashStyle.Solid;
+			this.separator1.Style = System.Drawing.Drawing2D.DashStyle.Dot;
 			this.separator1.TabIndex = 0;
 			this.separator1.Text = "separator1";
 			this.separator1.Thickness = 1;
-			this.separator1.UsingGradient = true;
+			this.separator1.UsingGradient = false;
 			// 
 			// Window
 			// 

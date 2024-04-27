@@ -33,7 +33,7 @@ namespace JASE.Controls
 		[Browsable(true), DisplayName("Direction"), Category("Behavior"), Description("Gets or sets the Direction for this Line.")]
 		public Directions Direction { get; set; }
 		[Browsable(true), DisplayName("Start Color"), Category("Appearance"), Description("Gets or sets the Starting Color for this Gradient Line.")]
-		
+
 		public Color StartColor { get; set; }
 
 		[Browsable(true), DisplayName("End Color"), Category("Appearance"), Description("Gets or sets the Ending Color for this Gradient Line.")]
@@ -45,207 +45,237 @@ namespace JASE.Controls
 		[Browsable(true), DisplayName("Color"), Category("Appearance"), Description("Gets or sets the Color for this Line.")]
 		public Color Color { get; set; }
 
+		public enum DrawTypes
+		{
+			Line = 0,
+			DashedLine,
+			GradientLine,
+			GradientAndDashedLine
+		}
+
+		public DrawTypes DrawType { get; set; }
+
 		public Separator()
 		{
 			Thickness = 1;
 
+			this.DoubleBuffered = true;
+
+			this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+			this.SetStyle(ControlStyles.ResizeRedraw, true);
+			this.SetStyle(ControlStyles.Selectable, true);
+
 			InitializeComponent();
+		}
+
+		private void Draw(DrawTypes drawType, PaintEventArgs e)
+		{
+			if (IsEnabled)
+			{
+				switch (drawType)
+				{
+					case DrawTypes.Line:
+						using (Pen pen = new Pen(
+								Color,
+								Thickness
+								)
+								)
+						{
+							if (Direction == Directions.Horizontal)
+							{
+								e.Graphics.DrawLine(
+									pen,
+									0,
+									0,
+									this.Width,
+									0
+									);
+							}
+							else
+							{
+								e.Graphics.DrawLine(
+									pen,
+									0,
+									0,
+									0,
+									this.Height
+									);
+							}
+						}
+						break;
+					case DrawTypes.DashedLine:
+						using (Pen pen = new Pen(
+								Color,
+								Thickness
+								)
+								)
+						{
+							if (Direction == Directions.Horizontal)
+							{
+								pen.DashStyle = Style;
+								pen.DashPattern = DashPattern;
+
+								e.Graphics.DrawLine(
+									pen,
+									0,
+									0,
+									this.Width,
+									0
+									);
+							}
+							else
+							{
+								pen.DashStyle = Style;
+								pen.DashPattern = DashPattern;
+
+								e.Graphics.DrawLine(
+									pen,
+									0,
+									0,
+									0,
+									this.Height
+									);
+							}
+						}
+						break;
+					case DrawTypes.GradientLine:
+						LinearGradientBrush linearGradientBrush = CreateNewLinearGradientBrush();
+
+						using (Pen pen = new Pen(
+							linearGradientBrush,
+							(float)Thickness
+							))
+						{
+							if (Direction == Directions.Horizontal)
+							{
+								e.Graphics.DrawLine(
+									pen,
+									0,
+									0,
+									this.Width,
+									0
+									);
+							}
+							else
+							{
+								e.Graphics.DrawLine(
+									pen,
+									0,
+									0,
+									0,
+									this.Height
+									);
+							}
+						}
+						break;
+					case DrawTypes.GradientAndDashedLine:
+						LinearGradientBrush gradientAndDashedLineLinearGradientBrush = CreateNewLinearGradientBrush();
+
+						using (Pen pen = new Pen(
+							gradientAndDashedLineLinearGradientBrush,
+							(float)Thickness
+							))
+						{
+							pen.DashStyle = Style;
+							pen.DashPattern = DashPattern;
+
+							if (Direction == Directions.Horizontal)
+							{
+								e.Graphics.DrawLine(
+									pen,
+									0,
+									0,
+									this.Width,
+									0
+									);
+							}
+							else
+							{
+								e.Graphics.DrawLine(
+									pen,
+									0,
+									0,
+									0,
+									this.Height
+									);
+							}
+						}
+						break;
+				}
+			}
+			else
+			{
+				using (Pen pen = new Pen(
+					Color.DimGray,
+					Thickness
+					)
+					)
+				{
+					if (Direction == Directions.Horizontal)
+					{
+						e.Graphics.DrawLine(
+							pen,
+							0,
+							0,
+							this.Width,
+							0
+							);
+					}
+					else
+					{
+						e.Graphics.DrawLine(
+							pen,
+							0,
+							0,
+							0,
+							this.Height
+							);
+					}
+				}
+			}
+		}
+
+		private LinearGradientBrush CreateNewLinearGradientBrush()
+		{
+			return new LinearGradientBrush(
+								new Point(
+									0,
+									0
+									),
+								new Point(
+									this.Width,
+									0
+									),
+								StartColor,
+								EndColor
+								);
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-			switch (Direction)
+			if (UsingGradient)
 			{
-				case Directions.Horizontal:
-					if(IsEnabled)
-					{
-						if (UsingGradient)
-						{
-							LinearGradientBrush linearGradientBrush = new LinearGradientBrush(
-								new Point(
-									0,
-									0
-									),
-								new Point(
-									this.Width,
-									0
-									),
-								StartColor,
-								EndColor
-								);
-
-							using (Pen pen = new Pen(
-								linearGradientBrush,
-								(float)Thickness
-								))
-							{
-								if(IsDashed)
-								{
-									pen.DashStyle = Style;
-									pen.DashPattern = DashPattern;
-								}
-
-								e.Graphics.DrawLine(
-									pen,
-									0,
-									0,
-									this.Width,
-									0
-									);
-							}
-						}
-						else
-						{
-							using (Pen pen = new Pen(
-							Color,
-							Thickness
-							)
-							)
-							{
-								if (IsDashed)
-								{
-									pen.DashStyle = Style;
-									pen.DashPattern = DashPattern;
-								}
-
-								e.Graphics.DrawLine(
-									pen,
-									new Point(
-										0,
-										0
-										),
-									new Point(
-										this.Width,
-										0
-										)
-									);
-							}
-						}
-					}
-					else
-					{
-						using (Pen pen = new Pen(
-							Brushes.DimGray,
-							Thickness
-							)
-							)
-						{
-							if (IsDashed)
-							{
-								pen.DashStyle = Style;
-								pen.DashPattern = DashPattern;
-							}
-
-							e.Graphics.DrawLine(
-								pen,
-								new Point(
-									0,
-									0
-									),
-								new Point(
-									0,
-									this.Height
-									)
-								);
-						}
-					}
-					break;
-				case Directions.Vertical:
-					if (IsEnabled)
-					{
-						if (UsingGradient)
-						{
-							LinearGradientBrush linearGradientBrush = new LinearGradientBrush(
-								new Point(
-									0,
-									0
-									),
-								new Point(
-									0,
-									this.Height
-									),
-								StartColor,
-								EndColor
-								);
-
-							using (Pen pen = new Pen(
-								linearGradientBrush,
-								(float)Thickness
-								))
-							{
-								if (IsDashed)
-								{
-									pen.DashStyle = Style;
-									pen.DashPattern = DashPattern;
-								}
-
-								e.Graphics.DrawLine(
-									pen,
-									0,
-									0,
-									0,
-									this.Height
-									);
-							}
-						}
-						else
-						{
-							using (Pen pen = new Pen(
-							Color,
-							Thickness
-							)
-							)
-							{
-								if (IsDashed)
-								{
-									pen.DashStyle = Style;
-									pen.DashPattern = DashPattern;
-								}
-
-								e.Graphics.DrawLine(
-									pen,
-									new Point(
-										0,
-										0
-										),
-									new Point(
-										0,
-										this.Height
-										)
-									);
-							}
-						}
-					}
-					else
-					{
-						using (Pen pen = new Pen(
-							Brushes.DimGray,
-							Thickness
-							)
-							)
-						{
-							if (IsDashed)
-							{
-								pen.DashStyle = Style;
-								pen.DashPattern = DashPattern;
-							}
-
-							e.Graphics.DrawLine(
-								pen,
-								new Point(
-									0,
-									0
-									),
-								new Point(
-									0,
-									this.Height
-									)
-								);
-						}
-					}
-					break;
+				if (IsDashed)
+				{
+					Draw(DrawTypes.GradientAndDashedLine, e);
+				}
+				else
+				{
+					Draw(DrawTypes.GradientLine, e);
+				}
+			}
+			else
+			{
+				if (IsDashed)
+				{
+					Draw(DrawTypes.DashedLine, e);
+				}
+				else
+				{
+					Draw(DrawTypes.Line, e);
+				}
 			}
 
 			base.OnPaint(e);
