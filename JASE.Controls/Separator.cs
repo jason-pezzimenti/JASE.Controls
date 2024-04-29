@@ -34,6 +34,13 @@ namespace JASE.Controls
 		[Browsable(true), DisplayName("Dash Pattern"), Category("Appearance"), Description("Gets or sets the Dash Pattern for this Dashed Line.")]
 		public float[] DashPattern { get; set; }
 
+		[Browsable(true), DisplayName("Blink On Color"), Category("Appearance"), Description("Gets or sets the Blink On Color for this Control.")]
+		public Color BlinkOnColor { get; set; } = Color.White;
+
+		[Browsable(true), DisplayName("Blink Off Color"), Category("Appearance"), Description("Gets or sets the Blink Off Color for this Control.")]
+		public Color BlinkOffColor { get; set; } = Color.Black;
+		
+
 		public enum Directions
 		{
 			Horizontal = 0,
@@ -108,6 +115,19 @@ namespace JASE.Controls
 											0,
 											xLocation + lineWidth, // Attribution: Windows 10 Co-Pilot (preview).
 											0
+											);
+									}
+									else
+									{
+										lineWidth = this.Height / lines;
+										int yLocation = (lineWidth * index) == 0 ? 0 : (lineWidth * index);
+
+										e.Graphics.DrawLine(
+											pen,
+											0,
+											yLocation,
+											0,
+											yLocation + lineWidth
 											);
 									}
 								}
