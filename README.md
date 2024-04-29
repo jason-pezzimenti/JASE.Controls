@@ -15,4 +15,4 @@ List of Controls:
 Open the Nuget Package Manager Console, and enter `Install-Package JASE.Controls -Version 1.0.0`. The ToolBox pane will then be populated with the Controls contained in this library.
 
 # Requirements
-The minimum-required .NET Framework version is .NET Framework v4.5.1.
+The minimum-required .NET Framework version is .NET Framework v4.8.
