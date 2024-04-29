@@ -100,6 +100,7 @@ namespace JASE.Controls
 			On
 		}
 
+		[Browsable(true), DisplayName("Blinking State"), Category("Behavior"), Description("Gets or sets the Blinking State for this Control.")]
 		public BlinkingStates BlinkingState { get; set; }
 
         public enum DrawTypes
@@ -142,10 +143,6 @@ namespace JASE.Controls
 				{
 					BlinkingState = BlinkingStates.On;
 				}
-			}
-			else
-			{
-				Console.WriteLine("Can't blink.");
 			}
 
 			this.Refresh();
