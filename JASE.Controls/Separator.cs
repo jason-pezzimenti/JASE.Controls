@@ -13,8 +13,15 @@ namespace JASE.Controls
 {
 	public partial class Separator : Control
 	{
-		[Browsable(true), DisplayName("Using Gradient"), Category("Behavior"), Description("Gets or sets whether to use a Gradient.")]
-		public bool UsingGradient { get; set; }
+		[Browsable(true), DisplayName("Supports Multiple Colors"), Category("Behavior"), Description("Gets or sets whether this Control supports multiple colors.")]
+		public bool SupportsMultipleColors { get; set; }
+
+		[Browsable(true), DisplayName("Colors"), Category("Appearance"), Description("Gets or sets the Colors to use for this Control.")]
+		public List<Color> Colors { get; set; } = new List<Color>();
+
+
+        [Browsable(true), DisplayName("Using Gradient"), Category("Behavior"), Description("Gets or sets whether to use a Gradient.")]
+        public bool UsingGradient { get; set; }
 		[Browsable(true), DisplayName("Is Enabled"), Category("Behavior"), Description("Gets or sets whether the Separator is Enabled.")]
 		public bool IsEnabled { get; set; } = true;
 		[Browsable(true), DisplayName("Is Dashed"), Category("Behavior"), Description("Gets or sets whether the Line is dashed.")]
@@ -75,31 +82,62 @@ namespace JASE.Controls
 				switch (drawType)
 				{
 					case DrawTypes.Line:
-						using (Pen pen = new Pen(
-								Color,
-								Thickness
-								)
-								)
+						if (SupportsMultipleColors && Colors != null && Colors.Count > 0)
 						{
-							if (Direction == Directions.Horizontal)
+							int lines = Colors.Count;
+							int lineWidth = this.Width / lines; // Attribution: Windows 10 Co-Pilot (preview).
+
+							for(int index = 0; index < lines; index++)
 							{
-								e.Graphics.DrawLine(
-									pen,
-									0,
-									0,
-									this.Width,
-									0
-									);
+								using (Pen pen = new Pen(
+									Colors[index],
+									Thickness
+									)
+									)
+								{
+									if(Direction == Directions.Horizontal)
+									{
+										int xLocation = (lineWidth * index) == 0 ? 0 : (lineWidth * index);
+
+										e.Graphics.DrawLine(
+											pen,
+											xLocation,
+											0,
+											xLocation + lineWidth, // Attribution: Windows 10 Co-Pilot (preview).
+											0
+											);
+									}
+								}
 							}
-							else
+						}
+						else
+						{
+							using (Pen pen = new Pen(
+									Color,
+									Thickness
+									)
+									)
 							{
-								e.Graphics.DrawLine(
-									pen,
-									0,
-									0,
-									0,
-									this.Height
-									);
+								if (Direction == Directions.Horizontal)
+								{
+									e.Graphics.DrawLine(
+										pen,
+										0,
+										0,
+										this.Width,
+										0
+										);
+								}
+								else
+								{
+									e.Graphics.DrawLine(
+										pen,
+										0,
+										0,
+										0,
+										this.Height
+										);
+								}
 							}
 						}
 						break;
