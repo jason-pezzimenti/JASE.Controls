@@ -19,15 +19,18 @@ namespace JASE.Controls
 		[Browsable(true), DisplayName("Colors"), Category("Appearance"), Description("Gets or sets the Colors to use for this Control.")]
 		public List<Color> Colors { get; set; } = new List<Color>();
 
-
         [Browsable(true), DisplayName("Using Gradient"), Category("Behavior"), Description("Gets or sets whether to use a Gradient.")]
         public bool UsingGradient { get; set; }
+
 		[Browsable(true), DisplayName("Is Enabled"), Category("Behavior"), Description("Gets or sets whether the Separator is Enabled.")]
 		public bool IsEnabled { get; set; } = true;
+
 		[Browsable(true), DisplayName("Is Dashed"), Category("Behavior"), Description("Gets or sets whether the Line is dashed.")]
 		public bool IsDashed { get; set; }
+
 		[Browsable(true), DisplayName("Dash Style"), Category("Appearance"), Description("Gets or sets the Dash Style for this Control.")]
 		public DashStyle Style { get; set; }
+
 		[Browsable(true), DisplayName("Dash Pattern"), Category("Appearance"), Description("Gets or sets the Dash Pattern for this Dashed Line.")]
 		public float[] DashPattern { get; set; }
 
