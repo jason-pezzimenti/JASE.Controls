@@ -39,7 +39,37 @@ namespace JASE.Controls
 
 		[Browsable(true), DisplayName("Blink Off Color"), Category("Appearance"), Description("Gets or sets the Blink Off Color for this Control.")]
 		public Color BlinkOffColor { get; set; } = Color.Black;
-		
+
+		private bool canBlink = false;
+
+		[Browsable(true), DisplayName("Blinking Interval"), Category("Behavior"), Description("Gets or sets the Blinking Interval for this Control.")]
+		public int BlinkingInterval { get; set; } = 1500;
+
+        [Browsable(true), DisplayName("Can Blink"), Category("Behavior"), Description("Gets or sets whether this Control can blink.")]
+
+		// Custom getter/setter by Microsoft Co-Pilot.
+        public bool CanBlink
+        {
+			get
+			{
+				return canBlink;
+			}
+			set
+			{
+				canBlink = value;
+
+				if (canBlink)
+				{
+					blinkingTimer.Start();
+				}
+				else
+				{
+					blinkingTimer.Stop();
+				}
+
+				this.Refresh();
+			}
+		}
 
 		public enum Directions
 		{
@@ -62,7 +92,17 @@ namespace JASE.Controls
 		[Browsable(true), DisplayName("Color"), Category("Appearance"), Description("Gets or sets the Color for this Line.")]
 		public Color Color { get; set; }
 
-		public enum DrawTypes
+        private Timer blinkingTimer;
+
+		public enum BlinkingStates
+		{
+			Off = 0,
+			On
+		}
+
+		public BlinkingStates BlinkingState { get; set; }
+
+        public enum DrawTypes
 		{
 			Line = 0,
 			DashedLine,
@@ -82,10 +122,36 @@ namespace JASE.Controls
 			this.SetStyle(ControlStyles.ResizeRedraw, true);
 			this.SetStyle(ControlStyles.Selectable, true);
 
+			blinkingTimer = new Timer();
+
+			blinkingTimer.Interval = BlinkingInterval;
+            blinkingTimer.Tick += BlinkingTimer_Tick;
+
 			InitializeComponent();
 		}
 
-		private void Draw(DrawTypes drawType, PaintEventArgs e)
+        private void BlinkingTimer_Tick(object sender, EventArgs e)
+        {
+			if (this.CanBlink)
+			{
+				if (BlinkingState == BlinkingStates.On)
+				{
+					BlinkingState = BlinkingStates.Off;
+				}
+				else
+				{
+					BlinkingState = BlinkingStates.On;
+				}
+			}
+			else
+			{
+				Console.WriteLine("Can't blink.");
+			}
+
+			this.Refresh();
+        }
+
+        private void Draw(DrawTypes drawType, PaintEventArgs e)
 		{
 			if (IsEnabled)
 			{
@@ -135,8 +201,26 @@ namespace JASE.Controls
 						}
 						else
 						{
+							Color color = this.BlinkOffColor;
+
+							if (this.CanBlink)
+							{
+								if (BlinkingState == BlinkingStates.On)
+								{
+									color = BlinkOnColor;
+								}
+								else
+								{
+									color = BlinkOffColor;
+								}
+							}
+							else
+							{
+								color = Color;
+							}
+
 							using (Pen pen = new Pen(
-									Color,
+									color,
 									Thickness
 									)
 									)

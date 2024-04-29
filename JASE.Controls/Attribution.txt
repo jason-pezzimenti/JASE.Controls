@@ -1,4 +1,5 @@
 ﻿AI Language Model Attribution:
 - Code to get evenly-spaced lines and to correctly position them provided by Microsoft Co-Pilot.
+- Custom getter/setter by Microsoft Co-Pilot.
 - Model: Microsoft Co-Pilot
 - License: None provided.
