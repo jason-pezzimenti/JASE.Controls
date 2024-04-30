@@ -13,7 +13,7 @@ namespace JASE.Controls
 {
     public partial class Separator : Control
     {
-        private new bool Enabled;
+        // TODO: Hide Enabled property later.
 
         [Browsable(true), DisplayName("Supports Multiple Colors"), Category("Behavior"), Description("Gets or sets whether this Control supports multiple colors.")]
         public bool SupportsMultipleColors { get; set; }
