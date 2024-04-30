@@ -10,7 +10,9 @@ List of Controls:
   - Gradient
   - Enabling/Disabling
   - Line Dashes and Dots
-  - Multi-Colors lines
+  - Multi-Colored lines
+  - Blinking
+  - Ability to change Disabled Color.
 
 # Installation
 Open the Nuget Package Manager Console, and enter `Install-Package JASE.Controls -Version 1.0.0`. The ToolBox pane will then be populated with the Controls contained in this library.
