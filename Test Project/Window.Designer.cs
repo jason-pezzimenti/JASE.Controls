@@ -60,23 +60,26 @@
             // 
             // separator1
             // 
+            this.separator1.BlinkingInterval = 1500;
             this.separator1.BlinkingState = JASE.Controls.Separator.BlinkingStates.On;
-            this.separator1.BlinkOffColor = System.Drawing.Color.Black;
-            this.separator1.BlinkOnColor = System.Drawing.Color.White;
+            this.separator1.BlinkOffColor = System.Drawing.Color.Gainsboro;
+            this.separator1.BlinkOnColor = System.Drawing.Color.Silver;
             this.separator1.CanBlink = true;
             this.separator1.Color = System.Drawing.Color.Silver;
             this.separator1.Colors = ((System.Collections.Generic.List<System.Drawing.Color>)(resources.GetObject("separator1.Colors")));
-            this.separator1.DashPattern = null;
+            this.separator1.DashPattern = new float[] {
+        10F,
+        5F};
             this.separator1.Direction = JASE.Controls.Separator.Directions.Horizontal;
             this.separator1.DrawType = JASE.Controls.Separator.DrawTypes.Line;
             this.separator1.EndColor = System.Drawing.Color.Empty;
-            this.separator1.IsDashed = false;
+            this.separator1.IsDashed = true;
             this.separator1.IsEnabled = true;
             this.separator1.Location = new System.Drawing.Point(12, 102);
             this.separator1.Name = "separator1";
             this.separator1.Size = new System.Drawing.Size(226, 10);
             this.separator1.StartColor = System.Drawing.Color.Empty;
-            this.separator1.Style = System.Drawing.Drawing2D.DashStyle.Solid;
+            this.separator1.Style = System.Drawing.Drawing2D.DashStyle.Dash;
             this.separator1.SupportsMultipleColors = false;
             this.separator1.TabIndex = 3;
             this.separator1.Text = "separator1";

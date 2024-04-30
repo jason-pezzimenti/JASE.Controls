@@ -198,26 +198,26 @@ namespace JASE.Controls
 						}
 						else
 						{
-							Color color = this.BlinkOffColor;
+							Color blinkingStateColor = this.BlinkOffColor;
 
 							if (this.CanBlink)
 							{
 								if (BlinkingState == BlinkingStates.On)
 								{
-									color = BlinkOnColor;
+                                    blinkingStateColor = BlinkOnColor;
 								}
 								else
 								{
-									color = BlinkOffColor;
+                                    blinkingStateColor = BlinkOffColor;
 								}
 							}
 							else
 							{
-								color = Color;
+                                blinkingStateColor = Color;
 							}
 
 							using (Pen pen = new Pen(
-									color,
+                                    blinkingStateColor,
 									Thickness
 									)
 									)
@@ -246,8 +246,26 @@ namespace JASE.Controls
 						}
 						break;
 					case DrawTypes.DashedLine:
-						using (Pen pen = new Pen(
-								Color,
+                        Color color = this.BlinkOffColor;
+
+                        if (this.CanBlink)
+                        {
+                            if (BlinkingState == BlinkingStates.On)
+                            {
+                                color = BlinkOnColor;
+                            }
+                            else
+                            {
+                                color = BlinkOffColor;
+                            }
+                        }
+                        else
+                        {
+                            color = Color;
+                        }
+
+                        using (Pen pen = new Pen(
+								color,
 								Thickness
 								)
 								)
