@@ -31,8 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Window));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.separator1 = new JASE.Controls.Separator();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.separator1 = new JASE.Controls.Separator();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,6 +59,17 @@
             this.label1.Text = "Thanks for using JASE.Controls. If you find any bugs, please raise an Issue on Gi" +
     "tHub and I will look into it.";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(12, 118);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(72, 17);
+            this.checkBox1.TabIndex = 4;
+            this.checkBox1.Text = "Blink Line";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // separator1
             // 
             this.separator1.BlinkingInterval = 1500;
@@ -71,10 +83,10 @@
         10F,
         5F};
             this.separator1.Direction = JASE.Controls.Separator.Directions.Horizontal;
-            this.separator1.DrawType = JASE.Controls.Separator.DrawTypes.Line;
+            this.separator1.DisabledColor = System.Drawing.Color.Gainsboro;
             this.separator1.EndColor = System.Drawing.Color.Empty;
             this.separator1.IsDashed = true;
-            this.separator1.IsEnabled = true;
+            this.separator1.IsEnabled = false;
             this.separator1.Location = new System.Drawing.Point(12, 102);
             this.separator1.Name = "separator1";
             this.separator1.Size = new System.Drawing.Size(226, 10);
@@ -86,22 +98,23 @@
             this.separator1.Thickness = 1;
             this.separator1.UsingGradient = false;
             // 
-            // checkBox1
+            // checkBox2
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(12, 118);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(72, 17);
-            this.checkBox1.TabIndex = 4;
-            this.checkBox1.Text = "Blink Line";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(90, 118);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(76, 17);
+            this.checkBox2.TabIndex = 5;
+            this.checkBox2.Text = "Is Enabled";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(250, 351);
+            this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.separator1);
             this.Controls.Add(this.groupBox1);
@@ -119,6 +132,7 @@
 		private System.Windows.Forms.Label label1;
         private JASE.Controls.Separator separator1;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
     }
 }
 

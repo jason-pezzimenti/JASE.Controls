@@ -28,5 +28,10 @@ namespace Test_Project
 				separator1.CanBlink = false;
 			}
         }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+			separator1.IsEnabled = checkBox2.Checked;
+        }
     }
 }
