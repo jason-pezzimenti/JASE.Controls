@@ -15,7 +15,7 @@ List of Controls:
   - Ability to change Disabled Color.
 
 # Installation
-Open the Nuget Package Manager Console, and enter `Install-Package JASE.Controls -Version 1.0.0`. The ToolBox pane will then be populated with the Controls contained in this library.
+Open the Nuget Package Manager Console, and enter `Install-Package JASE.Controls`. The ToolBox pane will then be populated with the Controls contained in this library.
 
 # Requirements
 The minimum-required .NET Framework version is .NET Framework v4.8.
